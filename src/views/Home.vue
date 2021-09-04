@@ -1,12 +1,13 @@
 <template>
 <div>
   <main v-if="!loading">
-    <dataTitle 
-    :title="title" 
+    <DataTitle 
+    :text="title" 
     :dataDate="dataDate" />
+    <DataBoxes :stats="stats" />
   </main>
 
-  <main class="flex flex-col align-center justify-center text-center" v-else>
+  <main v-else class="flex flex-col align-center justify-center text-center">
     <div class="text-gray-500 text-3xl mt-10 mb-6"> 
       Fetching Data
     </div>
@@ -17,12 +18,14 @@
 
 <script>
 // @ is an alias to /src
-import { DataTitle } from '@/components/DataTitle'
+import DataTitle  from '@/components/DataTitle';
+import DataBoxes  from '@/components/DataBoxes';
 
 export default {
   name: 'Home',
   components: {
     DataTitle,
+    DataBoxes,
   },
   data() {
     return {
@@ -35,25 +38,21 @@ export default {
     }
     
   },
-  components: {
-    
-  },
   methods: {
     async fetchCovidData() {
-      const res = await fetch('https://api.covid19api.com/summary')
-      const data = await res.json()
-      return data
+      const res = await fetch('https://api.covid19api.com/summary');
+      const data = await res.json();
+      return data;
     }
   },
   async created() {
     const data = await this.fetchCovidData()
-
-    this.dataDate = data.Data
+    console.log(data)
+    this.dataDate = data.Date
     this.stats = data.Global
     this.countries = data.Countries
     this.loading = false
-
-    console.log(data)
+    
   },
 }
 </script>
