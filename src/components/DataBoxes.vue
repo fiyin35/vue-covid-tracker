@@ -5,14 +5,37 @@
 
             <div class="text-2xl mb-4">
                 <span class="font-bold"> New: </span>
-                 </div>
-             </div>
+                {{ numberWithComma(stats.NewConfirmed) }}
+            </div>
+            <div class="text-2xl mb-4">
+                <span class="font-bold"> Total: </span>
+                {{ numberWithComma(stats.TotalConfirmed) }}
+            </div>
         </div>
+
+        <div class="shadow-md bg-red-200 p-10 text-center rounded"> 
+            <h3 class="text-3xl text-blue-900 font-bold mb-4"> Deaths </h3>
+
+            <div class="text-2xl mb-4">
+                <span class="font-bold"> New: </span>
+                {{ numberWithComma(stats.NewDeaths) }}
+            </div>
+            <div class="text-2xl mb-4">
+                <span class="font-bold"> Total: </span>
+                {{ numberWithComma(stats.TotalDeaths) }}
+            </div>
+        </div>
+     </div>
 </template>
 
 <script> 
 export default {
     name: 'DataBoxes',
-    props: ['stats']
+    props: ['stats'],
+    methods: {
+        numberWithComma(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        }
+    }
 }
 </script>
